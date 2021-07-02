@@ -1,18 +1,35 @@
-import { Navbar, Nav, Form, FormControl, Button } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
+import StorefrontIcon from "@material-ui/icons/Storefront";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import Link from "next/link";
 
 const Appbar = () => {
   return (
-    <Navbar bg="primary" variant="dark">
-      <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-      <Nav className="mr-auto">
-        <Nav.Link href="#home">Home</Nav.Link>
-        <Nav.Link href="#features">Features</Nav.Link>
-        <Nav.Link href="#pricing">Pricing</Nav.Link>
-      </Nav>
-      <Form inline>
-        <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-        <Button variant="outline-light">Search</Button>
-      </Form>
+    <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
+      <Link href="/">
+        <div className="d-flex align-items-center">
+          <StorefrontIcon className="text-white mr-2" />
+          <Navbar.Brand>Apni Dukaan</Navbar.Brand>
+        </div>
+      </Link>
+      <Navbar.Toggle aria-controls="responsive-navbar-nav" />
+      <Navbar.Collapse id="responsive-navbar-nav">
+        <Nav className="ml-auto">
+          <Link href="/user-profile">
+            <div className="d-flex align-items-center mr-2">
+              <AccountCircleIcon className="text-white" />
+              <Nav.Link>User Profile</Nav.Link>
+            </div>
+          </Link>
+          <Link href="/cart">
+            <div className="d-flex align-items-center">
+              <ShoppingCartIcon className="text-white" />
+              <Nav.Link>Cart</Nav.Link>
+            </div>
+          </Link>
+        </Nav>
+      </Navbar.Collapse>
     </Navbar>
   );
 };

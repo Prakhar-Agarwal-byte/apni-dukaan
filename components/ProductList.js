@@ -1,21 +1,16 @@
-import Link from "next/link";
-
 import Product from "./Product";
 
+import { Container, Row } from "react-bootstrap";
+
 const ProductList = ({ products }) => {
-  if (!products) return null;
   return (
-    <ul>
-      {products.map((product) => (
-        <li key={product.permalink}>
-          <Link href={`/products/${product.permalink}`}>
-            <a>
-              <Product {...product} />
-            </a>
-          </Link>
-        </li>
-      ))}
-    </ul>
+    <Container>
+      <Row xs={1} md={2} lg={3} className="g-4">
+        {products.map((product) => (
+          <Product key={product.id} product={product} />
+        ))}
+      </Row>
+    </Container>
   );
 };
 
