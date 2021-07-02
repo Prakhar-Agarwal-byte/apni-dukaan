@@ -80,7 +80,6 @@ const HomePage = ({ merchant, products }) => {
   }, [searchTerm]);
   return (
     <>
-      <Appbar />
       <SearchAndSort
         setSearchTerm={setSearchTerm}
         setSortOption={setSortOption}
