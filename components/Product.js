@@ -6,7 +6,7 @@ const Product = ({ product }) => {
   return (
     <Link href={`/products/${product.permalink}`}>
       <Col className="mt-4">
-        <Card className="hover-shadow" className={styles.card}>
+        <Card className={styles.card}>
           <Card.Img variant="top" src={product.assets[0].url} />
           <Card.Body>
             <Card.Title>{product.name}</Card.Title>
