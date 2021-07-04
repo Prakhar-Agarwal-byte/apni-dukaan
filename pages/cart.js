@@ -3,7 +3,7 @@ import { useCart } from "../context/cart";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 import Link from "next/link";
 
-const cart = () => {
+const CartPage = () => {
   const { cart } = useCart();
   if (cart && cart.total_items !== 0) {
     return (
@@ -46,4 +46,4 @@ const cart = () => {
   }
 };
 
-export default cart;
+export default CartPage;

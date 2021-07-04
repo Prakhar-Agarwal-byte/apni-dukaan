@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import { Alert, Container } from "react-bootstrap";
-const thanksPage = () => {
+
+const ThanksPage = () => {
   const router = useRouter();
   const { orderId } = router.query;
   return (
@@ -11,4 +12,4 @@ const thanksPage = () => {
   );
 };
 
-export default thanksPage;
+export default ThanksPage;

@@ -3,7 +3,8 @@ import commerce from "../lib/commerce";
 import { useEffect, useState, useRef } from "react";
 import { useCart } from "../context/cart";
 import { useRouter } from "next/router";
-const checkout = () => {
+
+const CheckoutPage = () => {
   const { cart, setCart } = useCart();
   const [token, setToken] = useState(null);
   const nameRef = useRef();
@@ -41,7 +42,7 @@ const checkout = () => {
     });
     commerce.cart.empty();
     setCart(null);
-    router.push(`/orders/${order.id}`);
+    router.push("/orders/[orderId]", `/orders/${order.id}`);
   };
 
   return (
@@ -81,4 +82,4 @@ const checkout = () => {
   );
 };
 
-export default checkout;
+export default CheckoutPage;
