@@ -4,7 +4,7 @@ import styles from "./Product.module.css";
 
 const Product = ({ product }) => {
   return (
-    <Link href={`/products/${product.permalink}`}>
+    <Link href={`/${product.permalink}`}>
       <Col className="mt-4">
         <Card className={styles.card}>
           <Card.Img variant="top" src={product.assets[0].url} />

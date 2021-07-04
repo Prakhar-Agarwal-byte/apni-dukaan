@@ -1,10 +1,12 @@
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Badge } from "react-bootstrap";
 import StorefrontIcon from "@material-ui/icons/Storefront";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Link from "next/link";
+import { useCart } from "../context/cart.js";
 
 const Appbar = () => {
+  const { cart } = useCart();
   return (
     <Navbar collapseOnSelect expand="lg" bg="primary" variant="dark">
       <Link href="/">
@@ -30,7 +32,10 @@ const Appbar = () => {
             <a>
               <div className="d-flex align-items-center">
                 <ShoppingCartIcon className="text-white" />
-                <span className="text-white ml-2"> Cart</span>
+                <Badge variant="danger">
+                  {cart ? cart.total_unique_items : null}
+                </Badge>
+                <span className="text-white ml-2">Cart</span>
               </div>
             </a>
           </Link>

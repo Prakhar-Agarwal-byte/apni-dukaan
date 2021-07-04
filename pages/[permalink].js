@@ -1,11 +1,49 @@
-import commerce from "../../lib/commerce";
+import commerce from "../lib/commerce.js";
+import { useRef, useState } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import Image from "next/image";
 import parse from "html-react-parser";
+import { useCart } from "../context/cart.js";
+import { ToastContainer, toast } from "react-toastify";
 
 export default function ProductPage({ product }) {
+  const quantityRef = useRef();
+  const { setCart } = useCart();
+  const [addBtnDisabled, setAddBtnDisabled] = useState(false);
+
+  const addToCart = async () => {
+    setAddBtnDisabled(true);
+    const quantity = parseFloat(quantityRef.current.value);
+    if (!Number.isInteger(quantity) || quantity <= 0) {
+      toast.error("🦄 Error: The product could not be added to your cart!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      const response = await commerce.cart.add(product.id, quantity);
+      console.log(response);
+      setCart(response.cart);
+      toast.success("🦄 The product was successfully added to your cart!", {
+        position: "top-center",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    }
+    setAddBtnDisabled(false);
+  };
+
   return (
     <Container className="mt-4">
+      <ToastContainer />
       <Row xs={1} md={2}>
         <Col>
           <Image
@@ -31,8 +69,15 @@ export default function ProductPage({ product }) {
                 type="text"
                 placeholder="Quantity"
                 style={{ width: "150px" }}
+                ref={quantityRef}
               />
-              <Button variant="primary">Add to Cart</Button>
+              <Button
+                variant="primary"
+                onClick={addToCart}
+                disabled={addBtnDisabled}
+              >
+                Add to Cart
+              </Button>
             </div>
           </div>
         </Col>

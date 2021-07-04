@@ -1,15 +1,16 @@
 import commerce from "../lib/commerce";
 import Fuse from "fuse.js";
 import { useState, useEffect } from "react";
+import { useCart } from "../context/cart";
 
 import ProductList from "../components/ProductList";
-import Appbar from "../components/Appbar";
 import SearchAndSort from "../components/SearchAndSort";
 
-const HomePage = ({ merchant, products }) => {
+const HomePage = ({ products }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProdList, setFilteredProdList] = useState(products);
   const [sortOption, setSortOption] = useState("");
+  const { setCart } = useCart();
 
   useEffect(() => {
     const filteredListClone = [...filteredProdList];
@@ -78,6 +79,11 @@ const HomePage = ({ merchant, products }) => {
       setFilteredProdList(results.map((result) => result.item));
     }
   }, [searchTerm]);
+
+  useEffect(async () => {
+    const cart = await commerce.cart.retrieve();
+    setCart(cart);
+  }, []);
   return (
     <>
       <SearchAndSort
@@ -90,12 +96,10 @@ const HomePage = ({ merchant, products }) => {
 };
 
 export const getStaticProps = async () => {
-  const merchant = await commerce.merchants.about();
   const { data: products } = await commerce.products.list();
 
   return {
     props: {
-      merchant,
       products,
     },
   };
