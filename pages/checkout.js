@@ -74,7 +74,7 @@ const CheckoutPage = () => {
             ref={cardRef}
           />
         </Form.Group>
-        <Button variant="success" onClick={handlePurchase}>
+        <Button type="submit" variant="success" onClick={handlePurchase}>
           Place Order
         </Button>
       </Form>
