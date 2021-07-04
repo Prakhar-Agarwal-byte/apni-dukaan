@@ -1,6 +1,7 @@
 import Cartlist from "../components/Cartlist";
 import { useCart } from "../context/cart";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
+import Link from "next/link";
 
 const cart = () => {
   const { cart } = useCart();
@@ -12,14 +13,21 @@ const cart = () => {
             <Cartlist />
             <Col className="mt-2">
               <Card>
-                <div className="d-flex flex-row justify-content-around"></div>
-                <div>
-                  <b>Subtotal: </b>
-                  <span>
-                    {cart.subtotal ? cart.subtotal.formatted_with_symbol : null}
-                  </span>
+                <div className="d-flex flex-row justify-content-between">
+                  <div>
+                    <b>Subtotal: </b>
+                    <span>
+                      {cart.subtotal
+                        ? cart.subtotal.formatted_with_symbol
+                        : null}
+                    </span>
+                  </div>
+                  <Link href="/checkout">
+                    <a>
+                      <Button variant="success">Checkout</Button>
+                    </a>
+                  </Link>
                 </div>
-                <Button variant="success">Checkout</Button>
               </Card>
             </Col>
           </Row>

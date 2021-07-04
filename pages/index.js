@@ -1,7 +1,6 @@
 import commerce from "../lib/commerce";
 import Fuse from "fuse.js";
 import { useState, useEffect } from "react";
-import { useCart } from "../context/cart";
 
 import ProductList from "../components/ProductList";
 import SearchAndSort from "../components/SearchAndSort";
@@ -10,7 +9,6 @@ const HomePage = ({ products }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredProdList, setFilteredProdList] = useState(products);
   const [sortOption, setSortOption] = useState("");
-  const { setCart } = useCart();
 
   useEffect(() => {
     const filteredListClone = [...filteredProdList];
@@ -80,10 +78,6 @@ const HomePage = ({ products }) => {
     }
   }, [searchTerm]);
 
-  useEffect(async () => {
-    const cart = await commerce.cart.retrieve();
-    setCart(cart);
-  }, []);
   return (
     <>
       <SearchAndSort

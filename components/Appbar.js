@@ -1,6 +1,5 @@
 import { Navbar, Nav, Badge } from "react-bootstrap";
 import StorefrontIcon from "@material-ui/icons/Storefront";
-import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import Link from "next/link";
 import { useCart } from "../context/cart.js";
@@ -20,14 +19,6 @@ const Appbar = () => {
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="ml-auto">
-          <Link href="/user-profile">
-            <a>
-              <div className="d-flex align-items-center mr-2">
-                <AccountCircleIcon className="text-white" />
-                <span className="text-white ml-2">User Profile</span>
-              </div>
-            </a>
-          </Link>
           <Link href="/cart">
             <a>
               <div className="d-flex align-items-center">
