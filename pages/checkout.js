@@ -11,8 +11,8 @@ const CheckoutPage = () => {
   const nameRef = useRef();
   const emailRef = useRef();
   const cardRef = useRef();
-
   const router = useRouter();
+  const [validated, setValidated] = useState(false);
 
   useEffect(async () => {
     setorderBtnDisabled(true);
@@ -26,8 +26,16 @@ const CheckoutPage = () => {
     }
   }, [cart]);
 
-  const handlePurchase = async () => {
+  const handlePurchase = async (event) => {
+    event.preventDefault();
     setorderBtnDisabled(true);
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      setorderBtnDisabled(false);
+      setValidated(true);
+      return;
+    }
+
     const order = await commerce.checkout.capture(token.id, {
       customer: {
         firstname: nameRef.current.value,
@@ -52,7 +60,7 @@ const CheckoutPage = () => {
 
   return (
     <Container className="mt-4">
-      <Form>
+      <Form noValidate validated={validated} onSubmit={handlePurchase}>
         <Form.Group>
           <Form.Label>Name</Form.Label>
           <Form.Control
@@ -79,12 +87,7 @@ const CheckoutPage = () => {
             ref={cardRef}
           />
         </Form.Group>
-        <Button
-          type="submit"
-          variant="success"
-          onClick={handlePurchase}
-          disabled={orderBtnDisabled}
-        >
+        <Button type="submit" variant="success" disabled={orderBtnDisabled}>
           Place Order
         </Button>
       </Form>

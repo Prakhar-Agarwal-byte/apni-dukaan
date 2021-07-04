@@ -3,7 +3,6 @@ import { useCart } from "../context/cart";
 
 const Cartlist = () => {
   const { cart } = useCart();
-  console.log(cart);
   return (
     <>
       {cart.line_items.map((cartitem) => (

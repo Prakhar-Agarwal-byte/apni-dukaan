@@ -26,7 +26,6 @@ export default function ProductPage({ product }) {
       });
     } else {
       const response = await commerce.cart.add(product.id, quantity);
-      console.log(response);
       setCart(response.cart);
       toast.success("🦄 The product was successfully added to your cart!", {
         position: "top-center",
