@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 const CheckoutPage = () => {
   const { cart, setCart } = useCart();
   const [token, setToken] = useState(null);
+  const [orderBtnDisabled, setorderBtnDisabled] = useState(false);
   const nameRef = useRef();
   const emailRef = useRef();
   const cardRef = useRef();
@@ -14,16 +15,19 @@ const CheckoutPage = () => {
   const router = useRouter();
 
   useEffect(async () => {
+    setorderBtnDisabled(true);
     if (cart) {
       const checkoutToken = await commerce.checkout.generateTokenFrom(
         "cart",
         cart.id
       );
       setToken(checkoutToken);
+      setorderBtnDisabled(false);
     }
   }, [cart]);
 
   const handlePurchase = async () => {
+    setorderBtnDisabled(true);
     const order = await commerce.checkout.capture(token.id, {
       customer: {
         firstname: nameRef.current.value,
@@ -43,6 +47,7 @@ const CheckoutPage = () => {
     commerce.cart.empty();
     setCart(null);
     router.push("/orders/[orderId]", `/orders/${order.id}`);
+    setorderBtnDisabled(false);
   };
 
   return (
@@ -74,7 +79,12 @@ const CheckoutPage = () => {
             ref={cardRef}
           />
         </Form.Group>
-        <Button type="submit" variant="success" onClick={handlePurchase}>
+        <Button
+          type="submit"
+          variant="success"
+          onClick={handlePurchase}
+          disabled={orderBtnDisabled}
+        >
           Place Order
         </Button>
       </Form>

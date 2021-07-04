@@ -2,13 +2,17 @@ import { Col, Card, Button } from "react-bootstrap";
 import Image from "next/image";
 import { useCart } from "../context/cart";
 import commerce from "../lib/commerce";
+import { useState } from "react";
 
 const Cartitem = ({ cartitem }) => {
   const { setCart } = useCart();
+  const [removeBtnDisabled, setremoveBtnDisabled] = useState(false);
 
   const removeItem = async () => {
+    setremoveBtnDisabled(true);
     const { cart } = await commerce.cart.remove(cartitem.id);
     setCart(cart);
+    setremoveBtnDisabled(false);
   };
 
   return (
@@ -28,7 +32,11 @@ const Cartitem = ({ cartitem }) => {
             <h4>{cartitem.name}</h4>
             {`${cartitem.quantity} x ${cartitem.price.formatted_with_symbol}`}
           </div>
-          <Button variant="danger" onClick={removeItem}>
+          <Button
+            variant="danger"
+            onClick={removeItem}
+            disabled={removeBtnDisabled}
+          >
             X
           </Button>
         </div>
